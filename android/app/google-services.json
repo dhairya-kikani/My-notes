@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "774383780799",
+    "project_id": "mynotes-9728d",
+    "storage_bucket": "mynotes-9728d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774383780799:android:21562422547e2bb5f7970a",
+        "android_client_info": {
+          "package_name": "com.makinfstuffup.mynotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "774383780799-neqrokp7d946r4sf3jgpir12tiitguch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCksGuhzP-9YUfmswVjOTFuAXz-UTGSpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "774383780799-neqrokp7d946r4sf3jgpir12tiitguch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "774383780799-makm8ud6jtdigal537dq0d0l3e0tvogb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.makinfstuffup.mynotes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
