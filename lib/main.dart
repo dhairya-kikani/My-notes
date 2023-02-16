@@ -79,7 +79,7 @@ PopupMenuButton<MenuAction>(
     switch (value){
        
       case MenuAction.logout:
-        final shouldLogout = await showLogOutDialog(context);
+      final shouldLogout = await  showLogOutDialog(context);
        if (shouldLogout) {
        await FirebaseAuth.instance.signOut();
        Navigator.of(context).pushNamedAndRemoveUntil(
