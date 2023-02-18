@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:mynotes/services/auth/auth_user.dart';
 import 'package:mynotes/services/auth/auth_provider.dart';
 import 'package:mynotes/services/auth/auth_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart'
  show FirebaseAuth, FirebaseAuthException;
+
+import '../../firebase_options.dart';
 
 
  class FirebaseAuthProvider implements AuthProvider {
@@ -54,20 +57,38 @@ AuthUser? get currentUser {
   Future<AuthUser> logIn({
  required String email,
 required String password,
-}) {
+}) async{
     try {
-FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
+await FirebaseAuth.instance.signInWithEmailAndPassword(
+  email: email,
+  password: password);
+  final user = currentUser;
+  if (user != null) {
+      return user;
+    } else {
+      throw UserNotLoggedInAuthException();
+    }
     } on FirebaseAuthException catch (e) {
-
-    }  catch (_) {
-
+                if (e.code == 'user-not-found') {
+                 throw UserNotFoundAuthException();
+                } else if (e.code == 'wrong-password') {
+                  throw WrongPasswordAuthExcepion();
+                } else {
+                  throw GenericAuthException();
+                } 
+              } 
+      catch (e) {
+throw GenericAuthException();
     }
   }
  
   @override
-  Future<void> logOut() {
-    // TODO: implement logOut
-    throw UnimplementedError();
+  Future<void> logOut() async  {
+    final user =  FirebaseAuth.instance.currentUser;
+    if (user != null) {
+       await FirebaseAuth.instance.signOut();
+    }else {
+      throw UserNotLoggedInAuthException();    }
   }
  
   @override
@@ -78,6 +99,13 @@ FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: passwor
     } else {
       throw UserNotLoggedInAuthException();
     }
+  }
+  
+ @override
+  Future<void> initialize() async {
+ await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+ );
   }
   
  }

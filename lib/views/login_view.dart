@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as devtools show log;
-
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/services/auth/auth_exceptions.dart';
 import 'package:mynotes/utilities/show_error_dialoge.dart';
+
+import '../services/auth/auth_serivce.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -60,14 +60,13 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await AuthService.firebase().logIn(
                   email: email,
-                  password: password,
-                );  
-                final user = FirebaseAuth.instance.currentUser;
-                if(user?.emailVerified ?? false) {
+                  password: password
+                  );
+                final user = AuthService.firebase().currentUser;
+                if(user?.isEmailVerified ?? false) {
                   // user's email is verified
-                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pushNamedAndRemoveUntil( 
                   notesRoute,
                    (route) => false,
@@ -81,29 +80,23 @@ class _LoginViewState extends State<LoginView> {
                   );
                 }
                 
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  await showErrorDialoge(
-                    context,
-                  'User not found'
-                  );
-                } else if (e.code == 'wrong-password') {
-                  await showErrorDialoge(
+              }
+              on UserNotFoundAuthException{
+                await showErrorDialoge(
+                  context,
+                 'User not found');
+              } on WrongPasswordAuthExcepion{
+                await showErrorDialoge(
                     context,
                   'Wrong credentials'
                   );
-                } else {
-                  await showErrorDialoge(
-                    context,
-                  'Error: ${e.code}',
-                  );
-                } 
-              } catch (e) {
+              } on GenericAuthException{
                 await showErrorDialoge(
                     context,
-                  e.toString(),
+                  'Authentication error',
                   );
               }
+            
             },
             child: const Text('Login'),
           ),
