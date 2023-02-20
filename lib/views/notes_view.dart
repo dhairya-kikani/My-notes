@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/services/auth/auth_serivce.dart';
+import 'package:mynotes/services/auth/auth_service.dart';
 
 import '../enums/menu_actions.dart';
 
