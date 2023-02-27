@@ -37,7 +37,7 @@ void _setUpTextControllerListener() {
   _textController.addListener( _textControllerListener);
 }
 
-Future<DatabaseNote> createNewNote() async{
+Future<DatabaseNote?> createNewNote() async{
   final existingNote = _note;
   if (existingNote != null) {
     return existingNote;
