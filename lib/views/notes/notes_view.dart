@@ -36,7 +36,7 @@ void dispose () {
         title: const Text('Your Notes'),
         actions: [
           IconButton(
-            onPressed: (){
+            onPressed: () {
              Navigator.of(context).pushNamed(newNoteRoute);
             },
            icon: const Icon(Icons.add),
@@ -76,8 +76,8 @@ return const [
               stream: _notesService.allNotes,
               builder: (context, snapshot) {
                 switch(snapshot.connectionState) {
-                
                   case ConnectionState.waiting:
+                  case ConnectionState.active:
                     return const Text('Waiting for all notes...');
                     default:
                     return const CircularProgressIndicator();
