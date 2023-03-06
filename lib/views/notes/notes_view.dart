@@ -32,7 +32,7 @@ void initState () {
         actions: [
           IconButton(
             onPressed: () {
-             Navigator.of(context).pushNamed(newNoteRoute);
+             Navigator.of(context).pushNamed(createOrOpdateNoteRoute);
             },
            icon: const Icon(Icons.add),
            ),
@@ -79,7 +79,13 @@ return const [
                         notes: allNotes, 
                         onDeleteNote: (note)async {
                         await _notesService.deleteNote(id: note.id);
-                        }
+                        },
+                        onTap: (note) {
+                         Navigator.of(context).pushNamed(
+                          createOrOpdateNoteRoute,
+                          arguments: note,
+                         );
+                        },
                         );
                     }else {
                       return const CircularProgressIndicator();
